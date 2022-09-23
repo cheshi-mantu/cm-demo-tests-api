@@ -40,7 +40,7 @@ public class ShipmentsRestTest {
     @Microservice("Shipment")
     @Tags({@Tag("api"), @Tag("regress"), @Tag("nightly")})
     @JiraIssues({@JiraIssue("AD-8")})
-    @DisplayName("API - closing an existing support issue")
+    @DisplayName("Closing an existing support issue")
     public void shouldDeleteCreatedIssue() {
         parameter("requester", OWNER);
         parameter("id", ID);

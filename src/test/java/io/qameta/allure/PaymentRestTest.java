@@ -40,7 +40,7 @@ public class PaymentRestTest {
     @Microservice("PaymentsWidget")
     @Tags({@Tag("api"), @Tag("regress"), @Tag("nightly")})
     @JiraIssues({@JiraIssue("AD-3")})
-    @DisplayName("API - closing an existing support issue")
+    @DisplayName("Closing an existing support issue")
     public void shouldDeleteCreatedIssue() {
         parameter("requester", OWNER);
         parameter("id", ID);
