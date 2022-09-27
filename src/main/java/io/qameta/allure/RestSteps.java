@@ -10,19 +10,29 @@ public class RestSteps {
 
     @Step("Create new payment `{title}`")
     public void createNewPayment(final String owner, final String title) {
-        step(String.format("POST /api/%s/payment", owner));
+        step(String.format("POST /api/%s/payment", owner), ()-> {
+            maybeThrowApiTimeoutException();
+        });
     }
 
     @Step("Cancel payment `{title}`")
     public void cancelExistingPayment(final String owner, final String title) {
-        step(String.format("GET /api/payment?id=%s", owner));
-        step(String.format("PATCH /api/payment/%s", owner));
+        step(String.format("GET /api/payment?id=%s", owner), ()-> {
+            maybeThrowApiTimeoutException();
+        });
+        step(String.format("PATCH /api/payment/%s", owner), ()-> {
+            maybeThrowApiTimeoutException();
+        });
     }
 
     @Step("Check payment `{title}` has been created")
     public void shouldSeeCreatedPayment(final String owner, final String title) {
-        step(String.format("GET /api/%s/payment?text=%s", owner, title));
-        step(String.format("GET /api/%s/payment/%s", owner, 10));
+        step(String.format("GET /api/%s/payment?text=%s", owner, title), ()-> {
+            maybeThrowApiTimeoutException();
+        });
+        step(String.format("GET /api/%s/payment/%s", owner, 10), ()-> {
+            maybeThrowApiTimeoutException();
+        });
     }
     @Step("Create new shipment `{title}`")
     public void createNewShipment(final String owner, final String title) {
@@ -33,7 +43,9 @@ public class RestSteps {
 
     @Step("Cancel shipment `{title}`")
     public void cancelExistingShipment(final String owner, final String title) {
-        step(String.format("GET /api/shipment?id=%s", title));
+        step(String.format("GET /api/shipment?id=%s", title), ()-> {
+            maybeThrowApiTimeoutException();
+        });
         step(String.format("PATCH /api/shipment/%s", title), ()-> {
             System.out.println("do stuff");
         });
@@ -41,7 +53,9 @@ public class RestSteps {
 
     @Step("Check shipment `{title}` has been created")
     public void shouldSeeCreatedShipment(final String owner, final String title) {
-        step(String.format("GET /api/%s/shipment?text=%s", owner, title));
+        step(String.format("GET /api/%s/shipment?text=%s", owner, title), ()-> {
+            maybeThrowApiTimeoutException();
+        });
         step(String.format("GET /api/%s/shipment/%s", owner, 10), ()-> {
             maybeThrowApiTimeoutException();
         });
@@ -50,13 +64,17 @@ public class RestSteps {
 
     @Step("Create support issue with title `{title}`")
     public void createIssueWithTitle(final String owner, final String title) {
-        step(String.format("POST /help/%s/issues", owner));
+        step(String.format("POST /help/%s/issues", owner), ()-> {
+            maybeThrowApiTimeoutException();
+        });
     }
 
 
     @Step("Close support issue with title `{title}`")
     public void closeIssueWithId(final String owner, final int id) {
-        step(String.format("GET /help/%s/issues?text=%s", owner,  id));
+        step(String.format("GET /help/%s/issues?text=%s", owner,  id), ()-> {
+            maybeThrowApiTimeoutException();
+        });
         step(String.format("PATCH /help/%s/issues/%s", owner,  id), ()-> {
             maybeThrowApiTimeoutException();
         });
@@ -64,8 +82,12 @@ public class RestSteps {
 
     @Step("Check note with content `{title}` exists")
     public void shouldSeeIssueWithTitle(final String owner, final String title) {
-        step(String.format("GET /help/%s/issues?text=%s", owner, title));
-        step(String.format("GET /help/%s/issues/%s", owner, 10));
+        step(String.format("GET /help/%s/issues?text=%s", owner, title), ()-> {
+            maybeThrowApiTimeoutException();
+        });
+        step(String.format("GET /help/%s/issues/%s", owner, 10), ()-> {
+            maybeThrowApiTimeoutException();
+        });
     }
 
     private void maybeThrowApiTimeoutException() {
