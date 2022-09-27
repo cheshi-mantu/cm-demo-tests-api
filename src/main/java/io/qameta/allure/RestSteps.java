@@ -95,6 +95,17 @@ public class RestSteps {
             fail(apiTimeoutException());
         }
     }
+    private String textEqual(final String expected, final String actual) {
+        return String.format("Expected value: '%s' \n" +
+                "Returned value: %s \n" +
+                "Message: {\"Status\":\"OK\", \"shipmentId\": \"%s\"}\n" +
+                expected, actual, actual);
+    }
+    private void maybeThrowAssertionException(String text) {
+        if (isTimeToThrowException()) {
+            fail(textEqual(text, "99"));
+        }
+    }
     private boolean isTimeToThrowException() {
         return new Random().nextBoolean()
                 && new Random().nextBoolean()
@@ -103,7 +114,6 @@ public class RestSteps {
     }
     private String apiTimeoutException() {
         return "java.net.SocketTimeoutException: connect timed out\n        at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)\n        at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)\n        at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)\n        at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)\n        at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)\n        at java.base/java.net.Socket.connect(Socket.java:609)\n        at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:542)\n        at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:414)\n        at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)\n        at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:326)\n        at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:610)\n        at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:445)\n        at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:835)\n        at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)\n        at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)\n        at org.apache.http.client.HttpClient$execute$0.call(Unknown Source)\n        at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:47)\n        at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)\n        at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:148)\n        at io.restassured.internal.RequestSpecificationImpl$RestAssuredHttpBuilder.doRequest(RequestSpecificationImpl.groovy:2055)\n        at io.restassured.internal.http.HTTPBuilder.doRequest(HTTPBuilder.java:495)\n        at io.restassured.internal.http.HTTPBuilder.request(HTTPBuilder.java:452)\n        at io.restassured.internal.http.HTTPBuilder$request$2.call(Unknown Source)\n        at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:47)\n        at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)\n        at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:166)";
-
     }
 
 }
