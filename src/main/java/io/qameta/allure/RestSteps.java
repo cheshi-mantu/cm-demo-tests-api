@@ -26,14 +26,16 @@ public class RestSteps {
     }
     @Step("Create new shipment `{title}`")
     public void createNewShipment(final String owner, final String title) {
-        step(String.format("POST /api/%s/shipment", owner));
+        step(String.format("POST /api/%s/shipment", owner), ()-> {
+            maybeThrowApiTimeoutException();
+        });
     }
 
     @Step("Cancel shipment `{title}`")
     public void cancelExistingShipment(final String owner, final String title) {
         step(String.format("GET /api/shipment?id=%s", title));
         step(String.format("PATCH /api/shipment/%s", title), ()-> {
-            maybeThrowApiTimeoutException();
+            System.out.println("do stuff");
         });
     }
 
