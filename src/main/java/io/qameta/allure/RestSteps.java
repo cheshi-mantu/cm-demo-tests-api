@@ -73,7 +73,7 @@ public class RestSteps {
     @Step("Close support issue with title `{title}`")
     public void closeIssueWithId(final String owner, final int id) {
         step(String.format("GET /help/%s/issues?text=%s", owner,  id), ()-> {
-            maybeThrowApiTimeoutException();
+            maybeThrowAssertionException(String.valueOf(id));
         });
         step(String.format("PATCH /help/%s/issues/%s", owner,  id), ()-> {
             maybeThrowApiTimeoutException();
@@ -83,7 +83,7 @@ public class RestSteps {
     @Step("Check note with content `{title}` exists")
     public void shouldSeeIssueWithTitle(final String owner, final String title) {
         step(String.format("GET /help/%s/issues?text=%s", owner, title), ()-> {
-            maybeThrowApiTimeoutException();
+            maybeThrowAssertionException(title, "Other title");
         });
         step(String.format("GET /help/%s/issues/%s", owner, 10), ()-> {
             maybeThrowApiTimeoutException();
@@ -104,6 +104,11 @@ public class RestSteps {
     private void maybeThrowAssertionException(String text) {
         if (isTimeToThrowException()) {
             fail(textEqual(text, "99"));
+        }
+    }
+    private void maybeThrowAssertionException(String actual, String expected) {
+        if (isTimeToThrowException()) {
+            fail(textEqual(expected, actual));
         }
     }
     private boolean isTimeToThrowException() {
