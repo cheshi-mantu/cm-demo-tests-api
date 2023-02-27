@@ -15,10 +15,8 @@ import static io.qameta.allure.Allure.parameter;
 public class PaymentRestTest {
 
     private static final String OWNER = "Mr. Order Randomson";
-
     private static final String TITLE = "confirmation string";
     private static final int ID = 11;
-
     private final RestSteps steps = new RestSteps();
 
     @Story("Manage payments via main page widget")
